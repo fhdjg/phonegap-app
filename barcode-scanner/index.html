@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello - My Name Abu Sofyan</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/bootstrap-4.1.1/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light fixed-top justify-content-around">
+  <a class="navbar-brand" href="#" style="font-weight: 400;">Phonegap Qr & Barcode</a>
+</nav>
+<nav class="navbar fixed-bottom navbar-light bg-light d-flex justify-content-around">
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link btn-sm py-1 mx-1 active" id="pills1-tab" data-toggle="pill" href="#pills1" role="tab" aria-controls="pills1" aria-selected="true">Qr & Barcode Scanner</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link btn-sm py-1 mx-1" id="pills2-tab" data-toggle="pill" href="#pills2" role="tab" aria-controls="pills2" aria-selected="false">QrCode Maker</a>
+  </li>
+</ul>
+</nav>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills1" role="tabpanel" aria-labelledby="pills1-tab">
+    <section class="container-fluid d-flex justify-content align-items-center" style="height: 100%; position: absolute;">              
+      <div class="jumbotron" style="width: 100%;">
+        <button class="col btn btn-primary btn-scan">Scan Code</button>
+        <br>
+        <br>
+        <p>Output: </p>
+        <textarea id="output" class="w-100"></textarea>
+      </div>
+      </section>
+  </div>
+  <div class="tab-pane fade" id="pills2" role="tabpanel" aria-labelledby="pills2-tab">
+    <section class="container-fluid d-flex justify-content align-items-center" style="height: 100%; position: absolute;">              
+      <div class="jumbotron" style="width: 100%;">
+        <div class="form-group">
+          <textarea class="form-control txt-qrcodeMaker" placeholder="Input Text here"></textarea>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-primary btn-sm btn-qrcodeMaker" data-toggle="modal" data-target=".modal-maker">Show Result</button>
+        </div>
+      </div>
+      </section>
+</div>
+
+
+    <div class="modal fade modal-maker" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+           <div id="qrcode" style="width: 100%; display: flex; justify-content: center;"></div>
+          </div> <!-- end modal-body -->
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="assets/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="assets/qrcode.min.js"></script>
+  <script type="text/javascript" src="assets/bootstrap-4.1.1/js/bootstrap.js"></script>
+  <script src="cordova.js"></script>
+  <script type="text/javascript">
+
+  var qrcode = new QRCode("qrcode");
+  $('.btn-qrcodeMaker').on('click', function(){
+    qrcode.makeCode($('.txt-qrcodeMaker').val());
+  });
+
+  $('.btn-scan').on('click', function(){
+    cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          $('#output').html(result.text);
+      },
+      function (error) {
+          alert("Scanning gagal: " + error);
+      },
+      {
+          preferFrontCamera : true,
+          showFlipCameraButton : true,
+          showTorchButton : true,
+          torchOn: true,
+          saveHistory: true,
+          prompt : "Place a barcode inside the scan area",
+          resultDisplayDuration: 500,
+          formats : "QR_CODE,PDF_417",
+          orientation : "landscape",
+          disableSuccessBeep: false
+      }
+   );
+  });
+    </script>
+</body>
+</html>
