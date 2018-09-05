@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
+    <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline'; media-src *">
+
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>Android App</title>
+
+    <link rel="stylesheet" href="f7/css/framework7.material.min.css">
+    <link rel="stylesheet" href="f7/css/framework7.material.colors.min.css">
+    <link rel="stylesheet" href="f7/css/material-icons.css">
+    <style>
+        html, body{
+        height: 100%;
+      }
+input[type='text'] {
+       border: 1px solid black;
+       width: 200px;
+       margin-left: 10px;
+}
+
+table {
+    width:100%;
+}
+table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+    background-color:#fff;
+}
+table#t01 th    {
+    background-color: black;
+    color: white;
+}
+button {
+    margin: 10px;
+    font: bold 13px "Helvetica Neue", Helvetica, Arial, clean, sans-serif !important;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    display: inline-block;
+    color: white;
+    padding: 5px 10px 5px;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #BE3E76;
+    border-style: none;
+    text-align: center;
+    overflow: visible;
+}
+
+button:active {
+    background-position: 0 -100px;
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.7);
+    -webkit-box-shadow: none;
+}
+
+#qrpopup {
+    position:fixed;z-index:9999;background-color:rgba(0, 0, 0,0.9);width:100%; height:100%;display:none;
+}
+
+  </style>
+</head>
+
+<body>
+<div class="views">
+    <div class="view view-main">
+      <div class="pages navbar-fixed">
+        <div data-page="menu_utama" class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div style="width: 100%; text-align: center; font-weight: bold;">TOKO KHALIJAH</div>
+            </div>
+          </div>
+          <div class="page-content"> 
+            <div class="content-block">
+                <div class="row" style="margin-bottom: 10px;">
+                  <a href="barang.html">
+                    <div class="col-100" style="box-shadow: 0px 3px 2px 0px #ccc;">
+                      <div class="row">
+                        <div class="col-100">
+                          <img src="img/barang.png" style="object-fit: contain; height: 50px; width: 50px; margin-left: auto; margin-right: auto; display: block;">
+                        </div>
+                        <div class="col-100">
+                          <div style="text-align: center; padding: 10px; font-weight: bold;">BARANG</div>
+                        </div>
+                      </div>
+                    </div>
+                    </a>
+                  <a href="#" onclick="scan()">
+                    <div class="col-100" style="box-shadow: 0px 3px 2px 0px #ccc;">
+                      <div class="row">
+                        <div class="col-100">
+                          <img src="img/backUp.png" style="object-fit: contain; height: 50px; width: 50px; margin-left: auto; margin-right: auto; display: block;">
+                        </div>
+                        <div class="col-100">
+                          <div style="text-align: center; padding: 10px; font-weight: bold;">BACK UP</div>
+                        </div>
+                      </div>
+                    </div>
+                    </a>
+                </div>
+
+                <div id="qrpopup" > //The hidden div tag for implementing the popup
+                      <hr/>
+                      <input type="text" id="editNameBox"><br>
+                      <input type="text" id="editNumberBox"><br>
+                      <button onclick="goDelete()">Delete</button>
+                      <button onclick="goEdit()">Edit</button>
+                      <button onclick="document.getElementById('qrpopup').style.display='none';">Discard</button>
+              </div>
+              <div>
+                  Name<input type="text" value="Name" id="txtName">
+                  Number<input type="text" value="123" id="txtNumber"><hr/>
+              </div>
+              <div id="tblDiv"></div>
+                <div style="text-align: center">
+                    <button onclick="goInsert()">Insert</button>
+                    <button onclick="goSearch()">Search</button>
+                    <button onclick="successCB()">Show All</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div> <!--pages-->
+    </div> <!--view view main-->
+  </div> <!-- views -->
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="f7/js/framework7.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript">
+function scan(){
+       cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          alert("We got a barcode\n" +
+                "Result: " + result.text + "\n" +
+                "Format: " + result.format + "\n" +
+                "Cancelled: " + result.cancelled);
+      },
+      function (error) {
+          alert("Scanning failed: " + error);
+      },
+      {
+          preferFrontCamera : true, // iOS and Android
+          showFlipCameraButton : true, // iOS and Android
+          showTorchButton : true, // iOS and Android
+          torchOn: true, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt : "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations : true, // iOS
+          disableSuccessBeep: false // iOS and Android
+      }
+   );
+}
+    </script>
+</body>
+
+</html>

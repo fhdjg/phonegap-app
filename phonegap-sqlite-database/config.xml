@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="id.garessi_khalijah" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Toko Hidayah</name>
+    <description>
+        Aplikasi pencatatan barang toko Hidayah
+    </description>
+    <author email="flamefyan@gmail.com" href="http://xakti.tech">
+        xakti team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.Notification" />
+    </feature>
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="14" />
+        <allow-intent href="market:*" />
+    </platform>
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-build-tool" value="gradle" />
+    <!-- <plugin name="cordova-plugin-console" spec="~1.0.1" /> -->
+    <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
+    <plugin name="cordova-plugin-file"></plugin>
+    <plugin name="cordova-plugin-sqlite"></plugin>
+    <plugin name="phonegap-plugin-barcodescanner" spec="4.1.0"/>
+    <!-- <plugin name="cordova-plugin-geolocation" spec="~1.0.1" /> -->
+    <!-- <plugin name="cordova-plugin-network-information" spec="~1.0.1" /> -->
+    <!-- <plugin name="cordova-plugin-media" /> -->
+    <!-- <plugin name="cordova-plugin-firebase" spec="0.1.21" /> -->
+    <!-- <plugin name="cordova-plugin-inappbrowser" /> -->
+    <!-- Uncomment to use the latest, fastest iOS WebView (see this post http://devgirl.org/2016/01/11/a-faster-hybrid-app-for-the-new-year/) -->
+    <!--<plugin name="cordova-plugin-wkwebview-engine" spec="~1.0.1" />-->
+
+
+    <platform name="android">
+        <icon src="img/icon.png" density="ldpi" />
+        <icon src="img/icon.png" density="mdpi" />
+        <icon src="img/icon.png" density="hdpi" />
+        <icon src="img/icon.png" density="xhdpi" />
+        <icon src="img/icon.png" density="xxhdpi" />
+        <icon src="img/icon.png" density="xxxhdpi" />
+
+        <preference name="SplashMaintainAspectRatio" value="false"/>
+        <preference name="android-installLocation" value="auto"/>
+    </platform>
+</widget>
